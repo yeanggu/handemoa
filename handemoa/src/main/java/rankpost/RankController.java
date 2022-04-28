@@ -405,8 +405,7 @@ public class RankController {
 		System.out.println("isEmpty:"+mf1.isEmpty()); //파일선택여부
 
 		// 파일내용+파일명--> 서버 c:/upload 폴더 영구 저장
-		String rootPath = System.getProperty("user.dir");
-		String savePath = rootPath+"/src/main/resources/static/css/images/";
+		String savePath = "/usr/mydir/tomcat/webapps/ROOT/WEB-INF/classes/static/css/images/";
 		
 		if(!mf1.isEmpty()) {
 			//원래파일명
