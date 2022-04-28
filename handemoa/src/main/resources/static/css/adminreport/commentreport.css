@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/*관리 탭*/
+
+#inner_space{
+	width: 100%;
+    height: 70px;
+}
+
+.content_commentreport_tab {
+	width: 50%;	
+	height:45px;
+	margin: auto;
+	border-radius:0px 15px 0px 0px;
+    background-color: white;
+    text-align: center;
+    line-height: 45px;
+}
+.content_postreport_tab {
+	width: 50%;	
+	height:45px;
+	margin: auto;	
+	border-radius:15px 0px 0px 0px;
+	background-color: rgb(210, 210, 210);
+	text-align: center;
+	line-height: 45px;
+}
+.content_postreport_tab a{
+	color: grey;
+}
+.content_commentreport_tab a{
+	color: #12379e;
+}
+/* 신고 내역 출력 테이블 칼럼 크기 */
+.report:first-child{ width:5%;}
+.report:nth-child(2),
+.report:nth-child(3),
+.report:nth-child(4),
+.report:last-child  { width:10%; }
+.report:nth-child(5) { 
+	width:50%; 
+	text-align: justify;
+}

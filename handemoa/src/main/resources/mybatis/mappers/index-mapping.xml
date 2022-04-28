@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="index.IndexDAO" >
+
+	<!-- 부분 카테고리 조회 -->
+	<select id="searchCate" resultType="String">
+		select distinct catename from category
+	</select>
+	<!-- 세부 카테고리 조회 -->
+	<select id="searchCateAll" resultType="categorydto">
+		select * from category
+	</select>
+	<!-- 부분 카테고리 해당 세부 카테고리 조회 -->
+	<select id="searchCateDetail" resultType="categorydto" parameterType="String">
+		select * from category 
+		<where>
+			<if test="catename != '전체검색'">
+				catename=#{catename}
+			</if>
+		</where>
+	</select>
+	
+	<select id="catedetailcode" parameterType="categorydto" resultType="int">
+	select catedetailcode from post
+	inner join category on post.catedetailcode = category.catedetailcode
+			where catename=#{catename} AND catedetailname = #{cateAll} AND divisioncode = 2
+	
+	</select>
+	
+	
+
+<select id="sellectreportlist" parameterType="admindto" resultType="admindto">
+select * from postreport 
+inner join member on postreport.reportid = member.id 
+inner join post on postreport.postnum = post.postnum
+	<trim prefix="WHERE">
+		<if test="reportType=='community'">
+			postreport.divisioncode = 1
+		</if>
+		<if test="reportType=='ranking'">
+			postreport.divisioncode = 2
+		</if>
+	</trim>
+order by postreport.postnum desc 
+LIMIT 0,8
+</select>
+
+<select id="sellectpostlist" parameterType="admindto" resultType="admindto">
+select * from post inner join member on post.memberid = member.id 
+	<trim prefix="WHERE">
+		<if test="postType=='community'">
+			post.divisioncode = 1
+		</if>
+		<if test="postType=='ranking'">
+			post.divisioncode = 2
+		</if>
+	</trim>
+order by post.viewcount desc 
+LIMIT 0,15
+</select>
+
+<select id="sellectnoticelist" parameterType="admindto" resultType="admindto">
+select * from notice order by regdate desc LIMIT 0,8
+</select>
+ 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

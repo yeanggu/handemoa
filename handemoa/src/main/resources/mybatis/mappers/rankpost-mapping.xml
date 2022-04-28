@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rankpost.RankPostDAO" >
+
+<select id="rankPostListView" resultType="rankpostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and c.catedetailname = #{catedetailname}
+order by a.regdate desc
+limit 10 offset 0
+</select>
+
+<select id="rankPostListViewInt" resultType="rankpostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and a.history = 0
+and a.tempsave = ${tempsave}
+and c.catedetailcode = ${catedetailcode}
+and a.postnum = d.postnum
+order by a.regdate desc
+limit 10 offset ${viewPage}
+</select>
+
+<select id="tempRankPostListViewInt" resultType="rankpostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.memberid, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and a.history = 0
+and a.memberid = #{memberid}
+and a.tempsave = ${tempsave}
+and c.catedetailcode = ${catedetailcode}
+order by a.regdate desc
+limit 10 offset ${viewPage}
+</select>
+
+<select id="rankPostListViewSearch" resultType="rankpostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and a.history = 0
+and a.tempsave = 1
+and c.catedetailcode = ${catedetailcode}
+and a.posttitle like CONCAT('%',#{postsearch},'%')
+order by a.regdate desc
+limit 10 offset ${viewPage}
+</select>
+
+<select id="allRankPostListViewInt" resultType="rankpostvo" parameterType="Integer">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.tempsave = ${tempsave}
+and a.catedetailcode = c.catedetailcode
+and c.catedetailcode = ${catedetailcode}
+order by a.regdate desc
+</select>
+
+<select id="tempAllRankPostListViewInt" resultType="rankpostvo" parameterType="Integer">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.memberid, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.tempsave = ${tempsave}
+and a.memberid = #{memberid}
+and a.catedetailcode = c.catedetailcode
+and c.catedetailcode = ${catedetailcode}
+order by a.regdate desc
+</select>
+
+<select id="allRankPostListViewSearch" resultType="rankpostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and a.history = 0
+and a.tempsave = 1
+and c.catedetailcode = ${catedetailcode}
+and a.posttitle like CONCAT('%',#{postsearch},'%')
+order by a.regdate desc
+</select>
+
+<select id="rankBoardList" resultType="rankpostvo" parameterType="String">
+SELECT 
+rank() over(order by ((likecount * 2) - dislikecount) desc) as 'rank',
+((likecount * 2) - dislikecount) as score,
+a.divisioncode,
+a.postnum,
+a.author,
+a.classtitle,
+a.posttitle,
+a.likecount, 
+a.dislikecount
+FROM handemoadb.post a,
+	 handemoadb.category b
+where divisioncode = '2'
+and a.catedetailcode = b.catedetailcode
+and b.catedetailname = #{catedetailname}
+limit 10
+</select>
+
+<select id="rankBoardListInt" resultType="rankpostvo" parameterType="Integer">
+SELECT 
+rank() over(order by (sumlikecount * 2) - dislikecount desc) as 'rank',
+c.score,
+a.divisioncode,
+a.postnum,
+a.author,
+a.classtitle,
+a.posttitle,
+c.sumlikecount, 
+c.sumdislikecount
+FROM handemoadb.post a,
+	 handemoadb.category b,
+     (select a.postnum, 
+			 ((sum(likecount) * 2) - (sum(dislikecount))) score, 
+			 sum(likecount) sumlikecount, 
+			 sum(dislikecount) sumdislikecount
+		from (
+			   select postnum, 
+			   case when likestatus = 1 then 1 else 0 end likecount, 
+			   case when likestatus = -1 then 1 else 0 end dislikecount 
+			   from handemoadb.postlike
+			  ) a
+		group by a.postnum) c
+where divisioncode = '2'
+and a.tempsave = 1
+and a.history = 0
+and a.catedetailcode = b.catedetailcode
+and b.catedetailcode = ${catedetailcode}
+and a.postnum = c.postnum
+limit 10;
+</select>
+
+<insert id="insert" parameterType="rankpostdto" useGeneratedKeys="true" keyProperty="postnum">
+insert into handemoadb.post(divisioncode, postnum, catedetailcode, author, classtitle, memberid, posttitle, content, likecount, dislikecount, viewcount, link, thumbnail, tempsave, history)
+values(#{divisioncode}, #{postnum}, #{catedetailcode},#{author},#{classtitle},#{memberid},#{posttitle},#{content},#{likecount},#{dislikecount},#{viewcount}, #{link}, #{thumbnail}, #{tempsave}, #{history})
+</insert>
+
+<select id="rankPostView" resultType="rankpostvo" parameterType="Integer">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.memberid, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.tempsave, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 2
+and a.catedetailcode = c.catedetailcode
+and a.postnum = ${postnum}
+</select>
+
+
+<select id="commentView" resultType="commentvo" parameterType="Integer">
+select a.divisioncode, a.postnum, a.memberid, a.commentnum, a.regdate, a.commentcontent, a.likecount, b.nickname
+from handemoadb.comment a, handemoadb.member b
+where a.memberid = b.id
+and a.postnum = ${postnum}
+</select>
+
+<insert id="commentInsert" parameterType="commentvo">
+insert into handemoadb.comment(divisioncode, postnum, memberid, commentcontent, likecount)
+values(#{divisioncode}, #{postnum}, #{memberid}, #{commentcontent}, #{likecount})
+</insert>
+
+<update id="postDelete" parameterType="Integer">
+update post set history = 1 where postnum = ${postnum};
+</update>
+
+<insert id="likepost" parameterType="String">
+insert into handemoadb.postlike(postnum, memberid, likestatus) values(${postnum}, #{userid}, ${likestatus})
+ON DUPLICATE KEY
+update likestatus = if(likestatus = ${likestatus}, 0, ${likestatus});
+</insert>
+
+<select id="countlikepost" parameterType="Integer" resultType="Integer">
+select count(*) as likecount from handemoadb.postlike where likestatus = ${likestatus} and postnum = ${postnum}
+</select>
+
+<update id="editRankingPost" parameterType="rankpostdto">
+update post set
+author = #{author},
+classtitle = #{classtitle},
+posttitle = #{posttitle},
+content = #{content},
+tempsave = ${tempsave}
+where postnum = ${postnum}
+</update>
+
+<update id="rankingViewCountUp" parameterType="Integer">
+update post set viewcount = viewcount+1 where postnum = ${postnum}
+</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

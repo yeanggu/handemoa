@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="adminmember.AdminMemberDAO" >
+<!-- 
+<select id="sellectalllist" parameterType="adminpagedto" resultType="adminmemberdto">
+select * from member
+	<trim prefix="WHERE" >
+		<if test="quitType=='member_select'">
+			status = false
+		</if>
+		<if test="quitType=='quit_member_select'">
+			status = true
+		</if>
+	</trim>
+order by regdate desc
+LIMIT #{firstRecordIndex},#{cntPerPage}
+</select>
+ 
+<select id="adminmembercount" parameterType="adminpagedto" resultType="int">
+SELECT count(*) FROM member
+	<trim prefix="WHERE">
+		<if test="quitType=='member_select'">
+			status = false
+		</if>
+		<if test="quitType=='quit_member_select'">
+			status = true
+		</if>
+	</trim>
+</select> 
+
+
+<select id="adminmembercount" resultType="int">
+SELECT count(*) FROM member
+</select>
+
+<select id="sellectalllist" parameterType="adminpagedto" resultType="adminmemberdto">
+select * from member order by regdate desc LIMIT #{firstRecordIndex},#{cntPerPage}
+</select>
+ -->
+
+
+
+<select id="searchlist" parameterType="adminsearchdto" resultType="adminmemberdto">
+select * from member
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+	<if test="keyword != null and keyword != '' ">
+		<if test="searchType=='nickname'">
+			AND nickname like concat('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='id'">
+			AND id like concat('%',#{keyword},'%')
+		</if>
+	</if>
+	<if test="keyword == null or keyword == '' ">
+		<if test="quitType=='member_select'">
+			status = false
+		</if>
+		<if test="quitType=='quit_member_select'">
+			status = true
+		</if>	
+	</if>		
+	</trim>
+order by regdate desc 
+LIMIT #{firstRecordIndex},#{cntPerPage}
+</select>
+ 
+<select id="searchcount" resultType="int">
+SELECT count(*) FROM member
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+	<if test="keyword != null and keyword != '' ">
+		<if test="searchType=='nickname'">
+			AND nickname like concat('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='id'">
+			AND id like concat('%',#{keyword},'%')
+		</if>
+	</if>
+	<if test="keyword == null or keyword == '' ">
+		<if test="quitType=='member_select'">
+			status = false
+		</if>
+		<if test="quitType=='quit_member_select'">
+			status = true
+		</if>	
+	</if>		
+	</trim>
+</select> 
+ 
+ 
+
+ 
+
+
+<delete id="deleteselect" parameterType="String">
+delete from member where id = #{id}
+</delete>
+
+<update id="quitselect" parameterType="adminmemberdto">
+	update member
+	set status=1 , quitdate=CURRENT_TIMESTAMP
+	where id = #{id} 
+</update>
+
+<select id="quitmemberOX" parameterType="Map" resultType="String">
+SELECT status
+  FROM member
+  <where>
+    <foreach item="value" index="key" collection="valueArr" open="id in (" separator="," close=")" >
+          #{value}
+    </foreach>
+  </where>
+</select>
+
+
+<!-- 
+
+<select id="member" resultType="memberdto" parameterType="String">
+	select * from member_table where id=#{id}
+</select>
+
+
+<select id="addresssearch" resultType="String" >
+select id from member_table where address in 
+<foreach collection="array" item="add" open="("  close=")"  separator=",">
+	#{add}
+</foreach>
+</select>
+-->
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

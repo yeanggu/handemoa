@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bookmark.BookMarkDAO">
+	<!-- 북마크 paging 조회 -->
+	<select id="bookMarkList" resultType="bookmarkjoindto" parameterType="hashmap">
+		select * from bookmarkjoin
+		<where>
+			memberid = #{memberid} 					
+			<if test="searchtxt != ''">
+				and posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>			
+		</where> 
+		order by bookmarknum limit #{pagestartrow}, #{limitrows}
+	</select>
+	
+	<!-- 북마크 조회 총 개수 -->
+	<select id="bookMarkRows" resultType="int">
+		select count(*) from bookmarkjoin
+		<where>
+			memberid = #{memberid}					
+			<if test="searchtxt != ''">
+				and posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>			
+		</where> 
+	</select>
+
+	<!-- 북마크 유무 확인 -->
+	<select id="checkBookMark" resultType="int" parameterType="hashmap">
+		select count(*)	from bookmark 
+		where memberid = #{memberid} and postnum = #{postnum}
+	</select>
+	<!-- 북마크 등록 -->
+	<insert id="insertBookMark" parameterType="bookmarkdto">
+		insert into bookmark(memberid, postnum) values(#{memberid}, #{postnum})
+	</insert>
+	<!-- 북마크 삭제 -->
+	<delete id="deleteBookMark" parameterType="bookmarkdto">
+		delete from bookmark where memberid = #{memberid} and postnum = #{postnum}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

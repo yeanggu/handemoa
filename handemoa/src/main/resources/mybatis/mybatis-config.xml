@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+  <!-- mybatis db 연결정보 세팅 파일 -->
+<configuration>
+
+<!-- sql 실행 결과 XXXDTO 매핑 -->
+<typeAliases>
+	<!-- 예은님 -->
+	<typeAlias type="index.IndexDTO" alias="indexdto"/>
+	<typeAlias type="admin.AdminDTO" alias="admindto"/>
+	<typeAlias type="notice.NoticeDTO" alias="noticedto"/>
+	<typeAlias type="notice.PageDTO" alias="pagedto"/>
+	<typeAlias type="notice.SearchDTO" alias="searchdto"/>
+	<typeAlias type="adminmember.AdminMemberDTO" alias="adminmemberdto"/>
+	<typeAlias type="adminmember.PageDTO" alias="adminpagedto"/>
+	<typeAlias type="adminmember.SearchDTO" alias="adminsearchdto"/>
+	<typeAlias type="postmanage.PostManageDTO" alias="postmanagedto"/>
+	<typeAlias type="postmanage.PageDTO" alias="postmanagepagedto"/>
+	<typeAlias type="postmanage.SearchDTO" alias="postmanagesearchdto"/>
+	<typeAlias type="profile.ProfileDTO" alias="profiledto"/>
+	<typeAlias type="profile.PageDTO" alias="profilepagedto"/>
+	<typeAlias type="profile.SearchDTO" alias="profilesearchdto"/>
+	
+	
+	<!-- 정년님 -->
+		<!-- 관리자 신고 관리 -->
+	   <typeAlias type="adminreport.PostReportDTO" alias="postreportdto"/>
+	   <typeAlias type="adminreport.CommentReportDTO" alias="commentreportdto"/>
+	   <typeAlias type="adminreport.PostReportJoinDTO" alias="postreportjoindto"/>
+	   <typeAlias type="adminreport.CommentReportJoinDTO" alias="commentreportjoindto"/>
+	   <typeAlias type="adminreport.AdminRCPageDTO" alias="adminrcpagedto"/>
+	   
+	   <!-- 관리자 댓글 관리 -->
+	   <typeAlias type="admincomment.AdminCommentJoinDTO" alias="admincommentjoindto"/>
+	   
+	   <!-- 북마크 -->
+	   <typeAlias type="bookmark.BookMarkJoinDTO" alias="bookmarkjoindto"/>
+	   <typeAlias type="bookmark.BookMarkDTO" alias="bookmarkdto"/>
+	   
+	   <!-- 검색 -->
+	   <typeAlias type="search.SearchPostJoinDTO" alias="searchpostjoindto"/>
+   
+   
+   <!-- 세윤님 -->
+   <typeAlias type="category1.CategoryDTO" alias="categorydto"/>
+   <typeAlias type="rankpost.RankPostVO" alias="rankpostvo"/>
+   <typeAlias type="rankpost.RankPostDTO" alias="rankpostdto"/>
+   <typeAlias type="rankpost.RankBoardVO" alias="rankboardvo"/>
+   <typeAlias type="rankpost.CommentVO" alias="commentvo"/>
+   
+   
+   <!-- 윤석님 -->
+   <typeAlias type="commupost.CommuPostVO" alias="commupostvo"/>
+   <typeAlias type="commupost.CommuPostDTO" alias="commupostdto"/>
+   <typeAlias type="commupost.CommuBoardVO" alias="commuboardvo"/>
+   <typeAlias type="commupost.CommuCommentVO" alias="commucommentvo"/>
+   
+   <!-- 은택님 -->
+	<typeAlias type="member.MemberDTO" alias="memberdto"/>
+   
+</typeAliases>
+
+</configuration>
+

@@ -1,0 +1,140 @@
+*{
+    font-family: 'Noto Sans KR', sans-serif;
+    list-style:none;
+    text-decoration: none;
+    border-collapse: collapse;
+    margin: 0px;
+    padding: 0px;
+    color: #000000;
+}
+
+h4{
+	margin:0 0 0 10px;
+}
+
+.container {
+	
+    display: flex;
+}
+
+#nav_area {
+    position: fixed;
+    flex-basis: 200px;
+    width: 200px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+}
+
+#nav_space {
+    width: 140px;
+    height: 969px;
+}
+
+#logo {
+    margin-top: 20px;
+    width: 100%;
+    
+}
+
+#nav_profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 50px;
+    width: 100%;
+    
+}
+#nav_profile_img {
+    margin: 0 auto 0 auto;
+    width: 113px;
+}
+
+#nav_login_btn {
+    margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#nav_login_btn:hover {
+    transition: 0.5s;
+    color: white;
+    background: #12379e;
+}
+
+#nav_list {
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav_list_area {
+    width: 100%;
+    height: 55px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    font-weight: 400;
+}
+
+#content_container {
+    flex-grow: 1;
+    background-color: #f4f4f4;
+}
+
+#content_container_space {
+    margin-left: 240px;
+    margin-right: 40px;
+}
+
+#search_area {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#search_box {
+    width: 250px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: white;
+    align-self: center;
+    box-shadow: 0px 0px 4px rgb(209, 209, 209);
+}
+
+#search_icon_area {
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search_box_space {
+    width: 5px;
+}
+
+#search {
+    width: 200px;
+    height: 40px;
+    margin-left: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size:17px;   
+}
+
+#search::placeholder {
+	 color: #bdbdbd;
+}
+
+#inner_space {
+    width: 100%;
+    height: 20px;
+}

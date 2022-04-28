@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="notice.NoticeDAO" >
+
+<select id="searchlist" parameterType="searchdto" resultType="noticedto">
+select * from notice 
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if test="searchType=='title' and keyword != null and keyword != '' ">
+			AND TITLE like concat('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='content' and keyword != null and keyword != '' ">
+			AND CONTENT like  concat('%',#{keyword},'%')
+		</if>
+	</trim>
+order by regdate desc 
+LIMIT #{firstRecordIndex},#{cntPerPage}
+</select>
+ 
+<select id="searchcount" resultType="int">
+SELECT count(*) FROM notice
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+	<if test="keyword != null and keyword != '' ">
+		<if test="searchType=='title'">
+			AND TITLE like concat('%',#{keyword},'%')
+		</if>
+		<if test="searchType=='content'">
+			AND CONTENT like concat('%',#{keyword},'%')
+		</if>
+	</if>
+	</trim>
+</select> 
+ 
+ 
+<select id="sellectalllist" parameterType="pagedto" resultType="noticedto">
+select * from notice order by regdate desc LIMIT #{firstRecordIndex},#{cntPerPage}
+</select>
+ 
+<select id="noticecount" resultType="int">
+SELECT count(*) FROM notice
+</select>
+
+<select id="noticeinner" parameterType="int" resultType="noticedto">
+select * from notice where noticenum = ${noticenum}
+</select>
+
+<insert id="insertnotice" parameterType="noticedto">
+insert into notice(title,content) values(#{title}, #{content})
+</insert>
+
+<delete id="deletenotice" parameterType="int">
+delete from notice where noticenum = ${noticenum}
+</delete>
+
+<select id="updateview" parameterType="int" resultType="noticedto">
+select * from notice where noticenum = ${noticenum}
+</select>
+
+<update id="updatenotice" parameterType="noticedto">
+update notice
+	set title=#{title} , content=#{content}
+	where noticenum = #{noticenum}
+</update>
+
+<delete id="deleteselect" parameterType="String">
+delete from notice where noticenum = ${noticenum}
+</delete>
+
+<!-- 
+
+페이징 처리 없이 정렬만 했을 때 sql문
+<select id="noticelist" resultType="noticedto">
+select * from notice order by regdate desc LIMIT 7
+</select>
+
+
+<select id="member" resultType="memberdto" parameterType="String">
+	select * from member_table where id=#{id}
+</select>
+
+
+<select id="addresssearch" resultType="String" >
+select id from member_table where address in 
+<foreach collection="array" item="add" open="("  close=")"  separator=",">
+	#{add}
+</foreach>
+</select>
+-->
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

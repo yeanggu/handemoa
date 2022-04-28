@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="admin.AdminDAO" >
+
+<select id="sellectmemberlist" parameterType="admindto" resultType="admindto">
+select * from member 
+	<trim prefix="WHERE">
+		<if test="quitType=='member_select'">
+			status = false
+		</if>
+		<if test="quitType=='quit_member_select'">
+			status = true
+		</if>
+	</trim>
+order by regdate desc LIMIT 0,8	
+</select>
+
+<select id="sellectreportlist" parameterType="admindto" resultType="admindto">
+select * from postreport 
+inner join member on postreport.reportid = member.id 
+inner join post on postreport.postnum = post.postnum
+	<trim prefix="WHERE">
+		<if test="reportType=='community'">
+			postreport.divisioncode = 1
+		</if>
+		<if test="reportType=='ranking'">
+			postreport.divisioncode = 2
+		</if>
+	</trim>
+order by postreport.postnum desc 
+LIMIT 0,8
+</select>
+
+<select id="sellectpostlist" parameterType="admindto" resultType="admindto">
+select * from post inner join member on post.memberid = member.id 
+	<trim prefix="WHERE">
+		<if test="postType=='community'">
+			post.divisioncode = 1
+		</if>
+		<if test="postType=='ranking'">
+			post.divisioncode = 2
+		</if>
+	</trim>
+order by post.regdate desc 
+LIMIT 0,8
+</select>
+
+<select id="sellectnoticelist" parameterType="admindto" resultType="admindto">
+select * from notice order by regdate desc LIMIT 0,8
+</select>
+ 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

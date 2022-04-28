@@ -1,0 +1,11 @@
+.title_bar:nth-child(1) {background-color:  rgb(209, 209, 209); border-radius: 15px 0 0 0;}
+.title_bar:nth-child(2) {background-color:  rgb(209, 209, 209);}
+.title_bar:nth-child(3) {background-color:  white; border-radius: 15px;}
+
+#postbar{
+	color: black;
+}
+
+#historybar{
+	color: #12379e;
+}

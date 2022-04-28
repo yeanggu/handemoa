@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminreport.AdminReportDAO">
+	<!-- 게시글 신고 sql -->
+	<!-- view table -->
+	<!-- paging 조회 -->
+	<select id="postReportList" resultType="postreportjoindto" parameterType="int[]">
+		select * from postreportjoin order by postnum limit
+		<foreach collection="array" item="page" separator=",">
+			#{page}
+		</foreach>
+	</select>
+	<!-- 카테고리별 신고 조회 -->
+	<select id="divisionPostReport" resultType="postreportjoindto" parameterType="hashmap">
+		select * from postreportjoin 
+		where divisioncode = #{divisioncode} 
+		order by postnum limit #{pagestartrow}, #{limitrows}
+	</select>
+	<!-- 신고 내역 총 개수 -->
+	<select id="postReporTotalRows" resultType="int">
+		select count(*) from postreportjoin
+	</select>
+	<!-- 분류별 신고 내역 총 개수 -->
+	<select id="postReportDivisionRows" resultType="int" parameterType="int">
+		select count(*) from postreportjoin where divisioncode = #{divisioncode}
+	</select>
+
+	<!-- 신고 사유 조회 -->
+	<select id="postReportDetail" resultType="postreportdto" parameterType="int">
+		select * from postreport where postnum = #{postnum}
+	</select>
+	<!-- 게시글 신고 삭제 -->
+	<delete id="deletePostReport">
+		delete from postreport where postnum in
+		<foreach collection="list" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+
+	<!-- 댓글 신고  -->
+	<!-- paging 조회 -->
+	<select id="commentReportList" resultType="commentreportjoindto" parameterType="int[]">
+		select * from commentreportjoin order by commentnum limit
+		<foreach collection="array" item="page" separator=",">
+			#{page}
+		</foreach>
+	</select>
+	<!-- 카테고리별 신고 조회 -->
+	<select id="divisionCommentReport" resultType="commentreportjoindto" parameterType="hashmap">
+		select * from commentreportjoin 
+		where divisioncode = #{divisioncode} 
+		order by commentnum limit #{pagestartrow}, #{limitrows}
+	</select>
+	<!-- 신고 내역 총 개수 -->
+	<select id="commentReporTotalRows" resultType="int">
+		select count(*) from commentreportjoin
+	</select>
+	<!-- 분류별 신고 내역 총 개수 -->
+	<select id="commentReportDivisionRows" resultType="int" parameterType="int">
+		select count(*) from commentreportjoin where divisioncode = #{divisioncode}
+	</select>
+
+	<!-- 신고 사유 조회 -->
+	<select id="commentReportDetail" resultType="postreportdto" parameterType="int">
+		select * from commentreport where commentnum = #{commentnum}
+	</select>
+	<!-- 댓글 신고 삭제 -->
+	<delete id="deleteCommentReport">
+		delete from commentreport where commentnum in
+		<foreach collection="list" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
