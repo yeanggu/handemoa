@@ -51,10 +51,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 
-public class Handemoa2Application {
+public class HandemoaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Handemoa2Application.class, args);
+		SpringApplication.run(HandemoaApplication.class, args);
 	}
 
 }
