@@ -2,7 +2,9 @@ package commupost;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import category1.CategoryDTO;
 import category1.CategoryService;
-import member.MemberDTO;
-import rankpost.Paging;
-import rankpost.RankBoardVO;
-import rankpost.RankPostVO;
 
 @Controller
 public class CommuController {
@@ -131,9 +129,37 @@ public class CommuController {
 	}
 	
 	@GetMapping("/communitypost")
-	public String commuPost(int postnum, Model model) {
+	public String commuPost(HttpServletRequest request, HttpServletResponse response, int postnum, Model model) {
 		
 		CommuPostVO vo = service.commuPostView(postnum);
+		
+		//조회수 증가 + 쿠키설정
+	    Cookie oldCookie = null;
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if (cookie.getName().equals("postView")) {
+	                oldCookie = cookie;
+	            }
+	        }
+	    }
+
+	    if (oldCookie != null) {
+	        if (!oldCookie.getValue().contains("[" + postnum + "]")) {
+	        	service.commuViewCountUp(postnum);
+	            oldCookie.setValue(oldCookie.getValue() + "_[" + postnum + "]");
+	            oldCookie.setPath("/");
+	            oldCookie.setMaxAge(60 * 60 * 24);
+	            response.addCookie(oldCookie);
+	        }
+	    } else {
+	    	service.commuViewCountUp(postnum);
+	        Cookie newCookie = new Cookie("postView","[" + postnum + "]");
+	        newCookie.setPath("/");
+	        newCookie.setMaxAge(60 * 60 * 24);
+	        response.addCookie(newCookie);
+	    }
+		
 		System.out.println("받은 글번호:"+postnum);
 		System.out.println("작성자 id:"+vo.getMemberid());
 		model.addAttribute("vo", vo);
@@ -204,6 +230,7 @@ public class CommuController {
 		dto.setViewcount(0);
 		dto.setTempsave(tempsave);
 		dto.setHistory(0);
+
 		if (link != null) {
 			dto.setLink(link);
 		}
@@ -216,15 +243,8 @@ public class CommuController {
 		else {
 			dto.setThumbnail(null);		
 		}
-		System.out.println("memberid값:"+dto.memberid);
-		System.out.println("링크 넣은값"+link);
-		System.out.println("적용된 링크값"+dto.link);
-		System.out.println("썸네일 넣은값"+thumbnail);
-		System.out.println("적용된 썸네일값"+dto.thumbnail);
 		row = service.commuinsert(dto);
-		System.out.println("값들어감:"+row+"개 데이터");
-			
-		model.addAttribute("fine", "fine");
+		System.out.println("글번호:"+dto.getPostnum());
 		return row;
 	}
 	
@@ -293,7 +313,7 @@ public class CommuController {
 	
 	@GetMapping("/likecommupost")
 	@ResponseBody
-	public int[] likecommupost(HttpServletRequest request, int postnum, String userid, int likestatus, Model model) {
+	public int[] likepost(HttpServletRequest request, int postnum, String userid, int likestatus, Model model) {
 		
 		HttpSession session = request.getSession();
 		

@@ -115,8 +115,11 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("member", logindto);
 			session.setAttribute("isLogOn", true);
-
+			
 			mv.setViewName("redirect:/handemoa");
+			
+			
+			
 		} else {
 			rAttr.addAttribute("result", "loginFailed");
 			mv.setViewName("redirect:/login");
@@ -147,7 +150,7 @@ public class MemberController {
 	  
 		@RequestMapping(value = "/memberedit", method = RequestMethod.POST)
 
-		public String membereditresult(MemberDTO dto) throws Exception {
+		public String membereditresult(HttpServletRequest request ,MemberDTO dto) throws Exception {
 			int result = service.memberedit(dto);
 			System.out.println(dto.id);
 			System.out.println(dto.intro);
@@ -155,6 +158,11 @@ public class MemberController {
 			System.out.println(dto.password);
 			System.out.println(dto.phone);
 			System.out.println(result);
+			
+			HttpSession session = request.getSession();
+			session.removeAttribute("member");
+			session.removeAttribute("isLogOn");
+			
 			return "redirect:/handemoa";
 		}
 	 
@@ -182,8 +190,7 @@ public String uploadresult(MultipartFile profileimgadd, Model model) throws IOEx
 	System.out.println("isEmpty:"+mf1.isEmpty()); //파일선택여부
 
 	// 파일내용+파일명--> 서버 c:/upload 폴더 영구 저장
-	String rootPath = System.getProperty("user.dir");
-	String savePath = rootPath+"/src/main/resources/static/css/images/";
+	String savePath = "/usr/mydir/tomcat/webapps/ROOT/WEB-INF/classes/static/css/images/";
 
 	
 	if(!mf1.isEmpty()) {
@@ -207,4 +214,3 @@ public String uploadresult(MultipartFile profileimgadd, Model model) throws IOEx
 
 
 }
-

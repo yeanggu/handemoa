@@ -30,7 +30,7 @@
 		<div id="nav_area">
 			<div id="nav_space">
 				<div id="logo">
-					<a href="/index"> <img src="css/images/logo.png" />
+					<a href="/handemoa"> <img src="css/images/logo.png" />
 					</a>
 				</div>
 				<div id="nav_profile">
@@ -93,7 +93,7 @@
 								
 									<b
 										style="color: red; font-size: 20px; letter-spacing: -0.03em;">프로필
-										사진 변경</b> <br>
+										사진 변경</b> <br> <br>
 									<div id="profileimg_text">
 										<form id="profileimg_form" enctype="multipart/form-data"
 											onsubmit="return false">
@@ -106,8 +106,8 @@
 											
 											<input type=file name="profileimgadd">
 											<!-- 한개 -->
-											<button id="profileimg_btn">프로필 등록</button>
 											<button id="profileimg_preview_btn">프로필 미리보기</button>
+											<button id="profileimg_btn">프로필 등록</button>
 										</form>
 										<!-- <input id=fileatt_text> <input
 											id="fileatt_btn" type="file"> <br> -->
@@ -166,7 +166,7 @@
 
 										</div>
 										<font id="nicknamecheck_font" size="2"
-											style="margin-left: 150px;"></font> <br> <br>
+											style="margin-left: 100px;"></font> <br> <br>
 
 										<div id="pw">
 											<b style="margin-right: 40px;">패스워드</b>
@@ -194,10 +194,10 @@
 											</div>
 										</div>
 										<div class="pw_success_class" id="pw_success_id"
-											style="font-size: 11px; color: green; margin-left: 150px;"
+											style="font-size: 11px; color: green; margin-left: 100px;"
 											hidden="hidden">비밀번호가 일치합니다.</div>
 										<div class="pw_fail_class" id="pw_fail_id"
-											style="font-size: 11px; color: red; margin-left: 150px;"
+											style="font-size: 11px; color: red; margin-left: 100px;"
 											hidden="hidden">비밀번호가 일치하지 않습니다. 다시 확인해주세요.</div>
 
 
@@ -231,7 +231,7 @@
 												class=repeat_check_class>중복확인</button>
 										</div>
 										<font id="phonecheck_font" size="2"
-											style="margin-left: 150px;"></font> <br> <br>
+											style="margin-left: 100px;"></font> <br> <br>
 										<div id="birth">
 											<b style="margin-right: 40px;">생년월일</b> <input id="birth_box"
 												placeholder="${member.birth}" disabled>
@@ -244,10 +244,10 @@
 									<div style="float: right;"></div>
 									<br>
 									<br>
+
 									<button id="memberout" onclick="memberquit()">회원탈퇴</button>
 
 									<button id="editcomple" type="submit">수정완료</button>
-
 								</form>
 							</div>
 						</div>

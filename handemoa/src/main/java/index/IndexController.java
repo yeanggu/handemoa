@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import bookmark.ViewPageDTO;
 import category1.CategoryDTO;
+import rankpost.Paging;
 import rankpost.RankBoardVO;
+import rankpost.RankPostVO;
 import search.SearchPostJoinDTO;
 
 
@@ -35,12 +39,10 @@ public class IndexController {
     		) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		List<String> catename = service.searchCate();
-		List<CategoryDTO> cateAll = service.searchCateAll();
 		List<IndexDTO> reportlist = service.sellectreportlist(reportType);
 		List<IndexDTO> postlist = service.sellectpostlist(postType);
 		List<IndexDTO> noticelist = service.sellectnoticelist();
 		mv.addObject("catename", catename);
-		mv.addObject("cateAll", cateAll);
 		mv.addObject("reportlist", reportlist);
 		mv.addObject("postlist", postlist);
 		mv.addObject("noticelist", noticelist);
@@ -48,22 +50,21 @@ public class IndexController {
         return mv;
 	}
 	
-	@RequestMapping("/search2")
-	   public ModelAndView search2() {
-	      ModelAndView mv = new ModelAndView();   
-	      
-	      int catedetailcode = service.catedetailcode(); 
-	      List<RankBoardVO> boardlist = service.rankBoardListInt(catedetailcode);
-	  		System.out.println(catedetailcode);
-	      mv.addObject("rankingboard", boardlist);
-	      mv.setViewName("index");
-	      return mv;
+	@ResponseBody
+	@RequestMapping(value = "/maincategory")
+	   public List<CategoryDTO> search(@RequestParam(required = false) String catename,Model model) {
+		  List<CategoryDTO> cateAll = service.searchCateAll(catename);
+	      return cateAll;
 	   }
 	
-	
-	
-	
-	
+	@ResponseBody
+	@RequestMapping(value = "/mainranking")
+	   public List<RankBoardVO> mainranking(@RequestParam(required = false) int catedetailcode,Model model) {
+			//랭킹순위 보드
+			List<RankBoardVO> boardlist = service.rankBoardListInt(catedetailcode);
+			model.addAttribute("rankingboard", boardlist);
+	      return boardlist;
+	   }
 	
 	
 	

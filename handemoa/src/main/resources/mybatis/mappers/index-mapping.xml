@@ -5,30 +5,49 @@
 
 <mapper namespace="index.IndexDAO" >
 
-	<!-- 부분 카테고리 조회 -->
-	<select id="searchCate" resultType="String">
-		select distinct catename from category
-	</select>
-	<!-- 세부 카테고리 조회 -->
-	<select id="searchCateAll" resultType="categorydto">
-		select * from category
-	</select>
-	<!-- 부분 카테고리 해당 세부 카테고리 조회 -->
-	<select id="searchCateDetail" resultType="categorydto" parameterType="String">
-		select * from category 
-		<where>
-			<if test="catename != '전체검색'">
-				catename=#{catename}
-			</if>
-		</where>
-	</select>
+<!-- 부분 카테고리 조회 -->
+<select id="searchCate" resultType="String">
+	select distinct catename from category
+</select>
+
+<!-- 세부 카테고리 조회 -->
+<select id="searchCateAll" resultType="categorydto" parameterType="String">
+	select catedetailname,catedetailcode from category where catename=#{catename}
+</select>
 	
-	<select id="catedetailcode" parameterType="categorydto" resultType="int">
-	select catedetailcode from post
-	inner join category on post.catedetailcode = category.catedetailcode
-			where catename=#{catename} AND catedetailname = #{cateAll} AND divisioncode = 2
+<select id="rankBoardListInt" resultType="rankpostvo" parameterType="Integer">
+SELECT 
+rank() over(order by (sumlikecount * 2) - dislikecount desc) as 'rank',
+c.score,
+a.divisioncode,
+a.postnum,
+a.author,
+a.classtitle,
+a.posttitle,
+c.sumlikecount, 
+c.sumdislikecount
+FROM handemoadb.post a,
+	 handemoadb.category b,
+     (select a.postnum, 
+			 ((sum(likecount) * 2) - (sum(dislikecount))) score, 
+			 sum(likecount) sumlikecount, 
+			 sum(dislikecount) sumdislikecount
+		from (
+			   select postnum, 
+			   case when likestatus = 1 then 1 else 0 end likecount, 
+			   case when likestatus = -1 then 1 else 0 end dislikecount 
+			   from handemoadb.postlike
+			  ) a
+		group by a.postnum) c
+where divisioncode = '2'
+and a.tempsave = 1
+and a.history = 0
+and a.catedetailcode = b.catedetailcode
+and b.catedetailcode = ${catedetailcode}
+and a.postnum = c.postnum
+limit 10;
+</select>	
 	
-	</select>
 	
 	
 

@@ -293,15 +293,12 @@
     display: flex;
 }
 
-.rank_post_thumbnail {
-    width: 120px;
-    height: 85px;
-    background-color: rgb(231, 231, 231);
-}
-
-.rank_post_thumbnail_inner {
-    width: 120px;
-    height: 85px;
+.like_view_count_box{
+	margin:auto; 
+	text-align:right;
+	width: 260px; 
+	display: flex; 
+	justify-content: space-between;
 }
 
 .rank_post_space {

@@ -23,14 +23,13 @@ public interface IndexDAO {
     public List<IndexDTO> sellectnoticelist();
     
 	//세부 카테고리 조회
-	public List<CategoryDTO> searchCateAll();
+	public List<CategoryDTO> searchCateAll(String catename);
 	//부분카테고리 해당 세부 카테고리 조회
 	public List<CategoryDTO> searchCateDetail(String catename);
 	
 	
 	
 	List<RankBoardVO> rankBoardListInt(int catedetailcode);
-	public int catedetailcode();
 }
 
 

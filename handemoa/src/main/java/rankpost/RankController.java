@@ -151,7 +151,6 @@ public class RankController {
 		
 		RankPostVO vo = service.rankPostView(postnum);
 		model.addAttribute("vo", vo);
-		System.out.println("tempsave값:"+vo.tempsave);
 		
 		//게시물번호 불러오기
 		model.addAttribute("postnum", postnum);
@@ -199,8 +198,6 @@ public class RankController {
 	        response.addCookie(newCookie);
 	    }
 			
-		System.out.println("받은 글번호:"+postnum);
-		System.out.println("작성자 id:"+vo.getMemberid());
 		model.addAttribute("vo", vo);
 				
 		List<RankBoardVO> boardlist = service.rankBoardListInt(vo.catedetailcode);
@@ -305,10 +302,7 @@ public class RankController {
 		else {
 			dto.setThumbnail(null);		
 		}
-		row = service.insert(dto);
-		System.out.println("글번호:"+dto.getPostnum());
-		
-		
+		row = service.insert(dto);		
 			
 		model.addAttribute("fine", "fine");
 		return row;
@@ -327,7 +321,6 @@ public class RankController {
 						int tempsave,
 						Model model) {
 		int row;
-		System.out.println("tempsave:"+tempsave);
 		RankPostDTO dto = new RankPostDTO();
 		dto.setPostnum(postnum);
 		dto.setAuthor(author);
@@ -348,9 +341,8 @@ public class RankController {
 		dto.setThumbnail(null);		
 		}
 		row = service.editRankingPost(dto);
-		System.out.println("값들어감:"+row+"개 데이터");
 		
-		return 1;
+		return row;
 	}
 	
 	@PostMapping("/commentinsert")

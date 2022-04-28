@@ -15,7 +15,6 @@ public class Paging {
 	private int previousPageStart;
 	private int nextPageStart;
 	private int firstPage;
-
 	
 	public Paging(int page, int pageViewSize, int total) {
 		this.page = page;

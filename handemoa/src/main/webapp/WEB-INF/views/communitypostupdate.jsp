@@ -219,7 +219,7 @@ $(document).ready(function(){
 								<!-- placeholder 속성 입력한 데이터가 없는 경우 배경으로 나타난다.실제적으로 입력을 100자까지로 지정 -->
 								<textarea id="posttitle" name="posttitle" class="commutexttitle"
 									placeholder="글 제목" rows="1" style="width: 750px; resize: none;"
-									maxlength="100">${communitydto.posttitle}</textarea>
+									maxlength="30">${communitydto.posttitle}</textarea>
 								<div class="form-group">
 									<!--  여러줄의 데이터를 입력하고 하고자 할때 textarea 태그를 사용한다. -->
 									<!--  textarea 안에 있는 모든 글자는 그대로 나타난다. 공백문자, tag, enter -->

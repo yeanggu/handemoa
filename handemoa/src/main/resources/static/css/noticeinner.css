@@ -16,6 +16,7 @@ h4{
 	display:flex;
 	background-color: rgb(209, 209, 209) ;
 	margin-bottom: 10px;
+	overflow: auto;
 }
 
 .noticeinner_container:nth-child(1){
@@ -53,3 +54,4 @@ h4{
 	display: flex;
     justify-content: center;
 }
+

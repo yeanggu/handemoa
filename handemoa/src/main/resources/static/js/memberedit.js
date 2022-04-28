@@ -95,7 +95,10 @@ if(pwcheck==2){
 if(phonecheck==2){
 	alert("휴대폰 번호 중복체크를 확인해주세요.");
 	ev.preventDefault();
+}
 
+if (nicknamecheck==1 && pwcheck==1 && phonecheck==1) {
+	alert("회원정보가 수정되었습니다.");
 }
 }); //회원가입 버튼 function END
 
@@ -190,7 +193,7 @@ function inputPhoneNumber(obj) {
 
 
 function memberquit() {
-		var memberquit_id = $("input[name='ajaxid']").val(); /*id가 들어간상태*/
+		var memberquit_id = $("input[name='id']").val(); /*id가 들어간상태*/
 	if (confirm("정말로 회원탈퇴 하시겠습니까?")) {
 		$.ajax({
 			url: "/memberquit",

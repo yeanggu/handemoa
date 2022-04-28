@@ -59,14 +59,14 @@
         url: "/commuinsert",
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         data: { 'catedetailcode': catecode,
-                'memberid': $('#memberid').val(),
-                'author': $('#author').val(),
-                'classtitle': $('#classtitle').val(),
-                'posttitle': $('#posttitle').val(),
-                'content': $('#post_content').val(),
-                'link': $('#link').val(),
-                'thumbnail': $('#thumbnail').val(),
-                'tempsave': tempsave},
+	        	 'memberid': $('#memberid').val(),
+	             'author': $('#author').val(),
+	             'classtitle': $('#classtitle').val(),
+	             'posttitle': $('#posttitle').val(),
+	             'content': $('#post_content').val(),
+	             'link': $('#link').val(),
+	             'thumbnail': $('#thumbnail_add').val(),
+	             'tempsave': tempsave},
         success: function (a) {
             alert("글이 등록되었습니다.");
             if (a == 1) {
@@ -125,7 +125,10 @@ justify-content: flex-end;
 .nav_list_area:nth-child(3) h4{
    color:white;
 }
-    
+
+#post_content{
+   resize: none;
+}
     
     </style>
 </head>
@@ -225,12 +228,12 @@ justify-content: flex-end;
                                     <!-- 반복할 게시물 시작 -->
                                         <input type="hidden" name="divisioncode" value="1" id="divisioncode">
                                         <input type="hidden" name="memberid" value="${member.id}" id="memberid">
-                                        <!-- 강의저자 <input type="text" name="author" id="author"> -->
-                                        <!-- 강의제목 <input type="text" name="classtitle" id="classtitle"><br> -->
-                                        <input type="text" name="posttitle" id="posttitle" placeholder="제목을 입력하세요."><br>
+                                        <input type="hidden" name="author" id="author">
+                                        <input type="hidden" name="classtitle" id="classtitle"><br>
+                                        <input type="text" maxlength='30' name="posttitle" id="posttitle" placeholder="제목을 입력하세요." style="width: 300px;"><br>
                                         <textarea name="content" id="post_content" placeholder="내용을 입력하세요." style="margin-top:20px ;"></textarea><br>
-                                        <!-- 링크 <input type="text" name="link" id="link"><br> -->
-                                        <!-- 썸네일 <input type="text" name="thumbnail" id="thumbnail"><br> -->
+                                        <input type="hidden" name="link" id="link"><br> 
+                                        <input type="hidden" name="thumbnail" id="thumbnail"><br>
                                         <input type="hidden" name="tempsave" value="1" id="tempsave">         
                                     <!-- 반복할 게시물 종료 -->
                                 </div>
@@ -251,24 +254,22 @@ justify-content: flex-end;
                             </div>
                         </div>
                         <div id="rankboard_area">
-                            <h2 id="rankboard_title">베스트 게시글</h2>
-                            <div class="inner_space"></div>
-                            <div id="rankboard_list">
-                                <!-- 반복할 게시물 시작 -->
-                                <c:forEach items="${ rankingboard }" var="list" >
-                                <c:set var="i" value="${i+1}"/>
-                                <div class="rankboard_list_box">
-                                    <div class="rankboard_list_number">
-                                        <h1>${i}</h1>
-                                    </div>
-                                    <div class="rankboard_list_inner">
-                                        <a href="/community?postnum=${list.postnum}">
-                                            <h3>${list.posttitle}</h3>
-                                        </a>
-                                        <p>${list.author} - ${list.classtitle}</p>
-                                    </div>
-                                </div>
-                                </c:forEach>
+							<div id="rankboard_title">베스트 게시글</div>
+							<div class="inner_space"></div>
+							<div id="rankboard_list">
+								<!-- 반복할 게시물 시작 -->
+								<c:forEach items="${ rankingboard }" var="list">
+									<c:set var="i" value="${i+1}" />
+									<div class="rankboard_list_box">
+										<div class="rankboard_list_number">
+											<h1>${i}</h1>
+										</div>
+											<div id="rankboard_post_title">
+											<a href="/communitypost?postnum=${list.postnum}">
+												${list.posttitle} </a>
+										</div>
+									</div>
+								</c:forEach>
                                 <!-- 반복할 게시물 종료 -->
                             </div>
                         </div>

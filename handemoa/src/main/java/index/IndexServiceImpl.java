@@ -41,8 +41,8 @@ public class IndexServiceImpl implements IndexService {
 	}
 	
 	@Override
-	public List<CategoryDTO> searchCateAll() {
-		return dao.searchCateAll();
+	public List<CategoryDTO> searchCateAll(String catename) {
+		return dao.searchCateAll(catename);
 	}
 
 	@Override
@@ -55,13 +55,5 @@ public class IndexServiceImpl implements IndexService {
 		return dao.rankBoardListInt(catedetailcode);
 	}
 
-	@Override
-	public int catedetailcode() {
-		return dao.catedetailcode();
-	}
-	
-	
-	
-	
 	
 }

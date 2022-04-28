@@ -19,7 +19,7 @@ limit 10 offset 0
 <select id="rankPostListViewInt" resultType="rankpostvo" parameterType="String">
 select
 a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from handemoadb.postlike where likestatus = 1 group by postnum) d
 WHERE a.memberid = b.id
 and a.divisioncode = 2
 and a.catedetailcode = c.catedetailcode
@@ -49,7 +49,7 @@ limit 10 offset ${viewPage}
 <select id="rankPostListViewSearch" resultType="rankpostvo" parameterType="String">
 select
 a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from handemoadb.postlike where likestatus = 1 group by postnum) d
 WHERE a.memberid = b.id
 and a.divisioncode = 2
 and a.catedetailcode = c.catedetailcode
@@ -57,6 +57,7 @@ and a.history = 0
 and a.tempsave = 1
 and c.catedetailcode = ${catedetailcode}
 and a.posttitle like CONCAT('%',#{postsearch},'%')
+and a.postnum = d.postnum
 order by a.regdate desc
 limit 10 offset ${viewPage}
 </select>

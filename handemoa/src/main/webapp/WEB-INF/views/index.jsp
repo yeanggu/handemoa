@@ -23,10 +23,10 @@
 function setcatedetail(){
 	let catename = $('#search_catename option:selected').text();
 	//세부카테고리초기화
-	$('#search_catedetailname').html('<option value="0">전체검색</option>');
+	$('#search_catedetailname').html('<option value="0">검색</option>');
 	//부분 카테고리에 해당하는 세부카테고리 조회
 	$.ajax({
-		url: "/search2",
+		url: "/maincategory",
 		data: { 'catename': catename },
 		type: 'post',
 		dataType: 'json',
@@ -43,7 +43,7 @@ $(window).on('load', (function(){
 	//페이지 새로 고침 후 선택했던 카테고리 유지
 	const searchParams = new URLSearchParams(location.search);
 	let catename = searchParams.get("catename");
-	if(catename == null) {catename = '전체검색';}
+	if(catename == null) {catename = '검색';}
 	$('#search_catename').val(catename).prop('selected', true);
 
 	setcatedetail();	
@@ -61,10 +61,27 @@ $(window).on('load', (function(){
 	$(document).on('click', '#search_btn', (function () {
 		let catename = $('#search_catename option:selected').val();
 		let catedetailcode = $('#search_catedetailname option:selected').val();
-		$('#test').html("catename - " + catename + "catedetailcode - " + catedetailcode);
+		
+		$.ajax({
+			type: "get",
+			url: "/mainranking",
+			data: { 'catedetailcode': catedetailcode },
+			type: 'post',
+			dataType: 'json',
+			success: function (response) {
+				console.log("rankboard 새로고침");
+                $('.rankboard_list_box').remove();
+                for (var i in response) {
+                    console.log(response[i].classtitle);
+                    var rankBoardList = $('<div class="rankboard_list_box"><div class="rankboard_list_number"><h1>'+(Number(i)+1)+'</h1></div><div class="rankboard_list_inner"><a href="/ranking?postnum='+response[i].postnum+'"><div id="rankboard_post_title" >'+response[i].posttitle+'</div></a><div id="rankboard_post_detail">'+response[i].author+' - '+response[i].classtitle+'</div></div></div>');
+                    $('#rankboard_list').append(rankBoardList);
+                } 
+			}
+		});	
 		
 	}));
-
+	
+	
 </script>
 
 
@@ -158,28 +175,30 @@ $(window).on('load', (function(){
 							<div class="index_name">
 	                            <h2>RANKING</h2>
 	                    	</div>
-
+	                    	
+	                    	
+							<div class= "select_area">
 							<div class="content_head_item">
-								부분카테고리 <select id="search_catename" name="search_catename">
-									<option value="전체검색">전체검색</option>
+								TITLE <select id="search_catename" name="search_catename">
+									<option value="검색">검색</option>
 									<c:forEach var="name" items="${catename}" varStatus="i">
 										<option value="${name}">${name}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="content_head_item">
-								세부카테고리 <select id="search_catedetailname"
+								DETAIL <select id="search_catedetailname"
 									name="search_catedetailname">
-									<option value="0">전체검색</option>
+									<option value="0">검색</option>
 									<c:forEach var="cate" items="${cateAll}" varStatus="i">
 										<option value="${cate.catedetailcode}">${cate.catedetailname}</option>
 									</c:forEach>
 								</select>
 							</div>
 							<div class="content_head_item">
-								<img id="search_btn" src="/css/images/search_icon.png" />
+								<img id="search_btn" src="/css/images/search_icon.png" style="cursor:pointer"/>
 							</div>
-							<div id = "test"></div>
+							</div>
 
 
 
@@ -190,32 +209,15 @@ $(window).on('load', (function(){
                             <div class="inner_space"></div>
                             <div id="rankboard_list">
                                 <!-- 반복할 게시물 시작 -->
-                                <c:forEach items="${ rankingboard }" var="list" >
-                                <c:set var="i" value="${i+1}"/>
-                                <div class="rankboard_list_box">
-                                    <div class="rankboard_list_number">
-                                        <h1>${i}</h1>
-                                    </div>
-                                    <div class="rankboard_list_inner">
-                                        <div id="rankboard_post_title">
-                                        	<a href="/rankingpost?postnum=${list.postnum}" >
-                                           		 ${list.posttitle}
-                                            </a>
-                                        </div>
-                                        <div id="rankboard_post_detail">
-                                        	${list.author} - ${list.classtitle}
-                                        </div>	
-                                    </div>
-                                </div>
-                                </c:forEach>
+ 
                                 <!-- 반복할 게시물 종료 -->
                             </div>
                         </div>
                         </div>
 								
 							<div id="button_area">
-								<a href="/ranking?catedetailcode=10&page=1">
-								<div id="all_select">전체보기</div>
+								<a href="/ranking?catedetailcode=10&page=1" id="all_select">
+									전체보기
 								</a>
 							</div>
 		         	</div>
@@ -261,8 +263,8 @@ $(window).on('load', (function(){
 							</div>
 							
 							<div id="button_area">
-							<a href="/community?catedetailcode=8&page=1">
-								<div id="all_select">전체보기</div>
+							<a href="/community?catedetailcode=8&page=1" id="all_select">
+								전체보기
 							</a>	
 							</div>
 			         </div>
@@ -295,8 +297,8 @@ $(window).on('load', (function(){
 								</c:forEach>
 							</div>
 								<div id="button_area">
-								<a href="/notice">
-									<div id="all_select">전체보기</div>
+								<a href="/notice" id="all_select">
+									전체보기
 								</a>	
 								</div>
 			         </div>	         	                         

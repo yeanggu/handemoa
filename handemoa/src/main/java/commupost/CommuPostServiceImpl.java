@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import category1.CategoryDTO;
+import rankpost.RankPostDTO;
 import rankpost.RankPostVO;
 
 @Service("commupostservice")
@@ -58,10 +59,20 @@ public class CommuPostServiceImpl implements CommuPostService {
 	public List<CommuCommentVO> commucommentView(int postnum) {
 		return dao.commucommentView(postnum);
 	}
-	
+	/*
 	@Override
 	public int commuinsert(CommuPostDTO dto) {
 		return dao.commuinsert(dto);
+	}
+	*/
+	
+	@Override
+	public int commuinsert(CommuPostDTO dto) {
+		int row = dao.commuinsert(dto);
+		int postnum = dto.getPostnum();
+		likecommupost(postnum,"admin",1);
+		
+		return row;
 	}
 	
 	@Override
@@ -107,6 +118,11 @@ public class CommuPostServiceImpl implements CommuPostService {
 	@Override
 	public int countlikecommupost(int postnum, int likestatus) {
 		return dao.countlikecommupost(postnum, likestatus);
+	}
+	
+	@Override
+	public void commuViewCountUp(int postnum) {
+		dao.commuViewCountUp(postnum);
 	}
 	
 }

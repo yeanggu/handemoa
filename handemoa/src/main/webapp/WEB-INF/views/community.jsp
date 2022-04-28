@@ -127,7 +127,7 @@
                     
                     <a href="/profile?nickname=${member.nickname}"><h3 style="text-align: center; color">${member.nickname} 님</h3></a>
                     <div style="display: flex;">
-                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #E02C1B">로그아웃</button>
+                    <button id="nav_login_btn" onclick="location.href='/logout'" style="color: white; background-color: #ce4764">로그아웃</button>
                     <button id="nav_login_btn" onclick="location.href='/memberedit'" style="color: white; background-color: gray; margin-left: 10px; font-size: 5px;">회원정보수정</button>
                     
                     </div>
@@ -233,14 +233,17 @@
 														<div class="rank_post_inner_1">
 															<p>${list.regdate}</p>
 															<a href="/profile?nickname=${list.nickname}"><p>${list.nickname}</p></a>
-															<p>조회수:${list.viewcount}</p>
+															
 														</div>
 														<div class="rank_post_inner_2">
 															<a href="/communitypost?postnum=${list.postnum}">
 																<h3>${list.posttitle}</h3>
 															</a>
 														</div>
-														<%-- <p>좋아요:${list.likecount}</p> --%>
+													</div>
+													<div class="like_view_count_box" >
+													<p>좋아요:${list.likecount}</p>
+													<p>조회수:${list.viewcount}</p>
 													</div>
 												</div>
 											</div>
@@ -254,28 +257,17 @@
 
 									
 									<div id="paging">
-
-										<c:if test="${paging.previousPageStart != -1}">
-											<div class="paging_btn">
-												<a
-													href="/communitysearch?catedetailcode=${catedetailcode}&page=${paging.previousPageStart}&postsearch=${postsearch}">이전</a>
-											</div>
-										</c:if>
-										<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-											var="num">
-											<div class="paging_btn">
-												<a
-													href="/communitysearch?catedetailcode=${catedetailcode}&page=${num}&postsearch=${postsearch}">${num}</a>
-											</div>
-										</c:forEach>
-										<c:if test="${paging.nextPageStart != -1}">
-											<div class="paging_btn">
-												<a
-													href="/communitysearch?catedetailcode=${catedetailcode}&page=${paging.nextPageStart}&postsearch=${postsearch}">다음</a>
-											</div>
-										</c:if>
-									</div>
-									<div class="inner_space"></div>
+                                    <c:if test="${paging.previousPageStart != -1}">
+                                        <div class="paging_btn"><a href="/communitysearch?catedetailcode=${catedetailcode}&page=${paging.previousPageStart}&postsearch=${postsearch}">이전</a></div>
+                                    </c:if>
+                                    <c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
+                                        <div class="paging_btn"><a href="/communitysearch?catedetailcode=${catedetailcode}&page=${num}&postsearch=${postsearch}">${num}</a></div>
+                                    </c:forEach>
+                                    <c:if test="${paging.nextPageStart != -1}">
+                                        <div class="paging_btn"><a href="/communitysearch?catedetailcode=${catedetailcode}&page=${paging.nextPageStart}&postsearch=${postsearch}">다음</a></div>
+                                    </c:if>
+                                </div>
+                                <div class="inner_space"></div>
 								</div>
 							</div>
 						</div>	
@@ -294,7 +286,7 @@
 													<h1>${i}</h1>
 												</div>
 												<div id="rankboard_post_title">
-													<a href="/rankingpost?postnum=${list.postnum}">
+													<a href="/communitypost?postnum=${list.postnum}">
 														${list.posttitle} </a>
 												</div>
 											</div>

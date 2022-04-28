@@ -53,6 +53,7 @@
 #membereditboard_area_box > p {
     margin-top: 20px;
     font-size: 18px;
+    white-space: pre-wrap;
 }
 
 #membereditboard_area_box > div {
@@ -139,7 +140,6 @@
 
 #nickname_change_btn {
 	margin-left:10px;
-	
     width: 70px;
     height: 30px;
     border: none;
@@ -391,4 +391,40 @@ height: 200px;
     border-radius:80%;
     width:200px;
     height: 200px;
+}
+
+#profileimg_btn {
+	margin-left:10px;
+    width: 85px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #12379e;
+    cursor:pointer;
+    float: right;
+}
+
+#profileimg_preview_btn {
+	margin-left:10px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #12379e;
+    cursor:pointer;
+    float: right;
+}
+
+#file-upload-button {
+	
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #12379e;
+    cursor:pointer;
+    
 }

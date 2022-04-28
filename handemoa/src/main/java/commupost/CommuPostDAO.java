@@ -45,4 +45,6 @@ public interface CommuPostDAO {
 	
 	public int likecommupost(int postnum, String userid, int likestatus);
 	public int countlikecommupost(int postnum, int likestatus);
+	
+	public void commuViewCountUp(int postnum);
 }

@@ -18,22 +18,23 @@ limit 10 offset 0
 
 <select id="commuPostListViewInt" resultType="commupostvo" parameterType="String">
 select
-a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
 WHERE a.memberid = b.id
 and a.divisioncode = 1
 and a.catedetailcode = c.catedetailcode
 and a.history = 0
 and a.tempsave = 1
 and c.catedetailcode = ${catedetailcode}
+and a.postnum = d.postnum
 order by a.regdate desc
 limit 10 offset ${viewPage}
 </select>
 
 <select id="commuPostListViewSearch" resultType="commupostvo" parameterType="String">
 select
-a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.posttitle, a.content, d.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c, (select postnum, count(*) as likecount from postlike where likestatus = 1 group by postnum) d
 WHERE a.memberid = b.id
 and a.divisioncode = 1
 and a.catedetailcode = c.catedetailcode
@@ -41,6 +42,7 @@ and a.history = 0
 and a.tempsave = 1
 and c.catedetailcode = ${catedetailcode}
 and a.posttitle like CONCAT('%',#{postsearch},'%')
+and a.postnum = d.postnum
 order by a.regdate desc
 limit 10 offset ${viewPage}
 </select>
@@ -69,6 +71,34 @@ and a.history = 0
 and a.tempsave = 1
 and c.catedetailcode = ${catedetailcode}
 and a.posttitle like CONCAT('%',#{postsearch},'%')
+order by a.regdate desc
+</select>
+
+<select id="tempCommuPostListViewInt" resultType="commupostvo" parameterType="String">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.memberid, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 1
+and a.catedetailcode = c.catedetailcode
+and a.history = 0
+and a.memberid = #{memberid}
+and a.tempsave = ${tempsave}
+and c.catedetailcode = ${catedetailcode}
+order by a.regdate desc
+limit 10 offset ${viewPage}
+</select>
+
+<select id="tempAllCommuPostListViewInt" resultType="commupostvo" parameterType="Integer">
+select
+a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.memberid, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, b.nickname, b.profileimg
+FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
+WHERE a.memberid = b.id
+and a.divisioncode = 1
+and a.tempsave = ${tempsave}
+and a.memberid = #{memberid}
+and a.catedetailcode = c.catedetailcode
+and c.catedetailcode = ${catedetailcode}
 order by a.regdate desc
 </select>
 
@@ -124,7 +154,7 @@ and a.postnum = c.postnum
 limit 10;
 </select>
 
-<insert id="commuinsert" parameterType="commupostdto">
+<insert id="commuinsert" parameterType="commupostdto" useGeneratedKeys="true" keyProperty="postnum">
 insert into handemoadb.post(divisioncode, catedetailcode, author, classtitle, memberid, posttitle, content, likecount, dislikecount, viewcount, link, thumbnail, tempsave, history)
 values(#{divisioncode} ,#{catedetailcode},#{author},#{classtitle},#{memberid},#{posttitle},#{content},#{likecount},#{dislikecount},#{viewcount}, #{link}, #{thumbnail}, #{tempsave}, #{history})
 </insert>
@@ -169,43 +199,6 @@ update post set history = 1 where postnum = ${postnum};
 	 tempsave = 1
 	 where postnum = #{postnum}
 	</update>
-<!-- regdate= #{regdate} -->
-
-	<select id="communityimsi" resultType="commupostdto">
-	select * FROM POST WHERE tempsave=true and history=false ORDER BY regdate DESC LIMIT #{firstRecordIndex},#{cntPerPage}
-	</select>
-	
-	<select id="commuimsicount" resultType="int">
-	SELECT count(*) FROM post WHERE divisioncode=1 and tempsave=true and history=false
-	</select>
-
-<select id="tempCommuPostListViewInt" resultType="commupostvo" parameterType="String">
-select
-a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.memberid, a.author, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, a.history, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
-WHERE a.memberid = b.id
-and a.divisioncode = 1
-and a.catedetailcode = c.catedetailcode
-and a.history = 0
-and a.memberid = #{memberid}
-and a.tempsave = ${tempsave}
-and c.catedetailcode = ${catedetailcode}
-order by a.regdate desc
-limit 10 offset ${viewPage}
-</select>
-
-<select id="tempAllCommuPostListViewInt" resultType="commupostvo" parameterType="Integer">
-select
-a.divisioncode, a.postnum, a.catedetailcode, a.regdate, a.classtitle, a.author, a.memberid, a.posttitle, a.content, a.likecount, a.dislikecount, a.viewcount, a.link, a.thumbnail, b.nickname, b.profileimg
-FROM handemoadb.post a, handemoadb.member b, handemoadb.category c
-WHERE a.memberid = b.id
-and a.divisioncode = 1
-and a.tempsave = ${tempsave}
-and a.memberid = #{memberid}
-and a.catedetailcode = c.catedetailcode
-and c.catedetailcode = ${catedetailcode}
-order by a.regdate desc
-</select>
 
 <insert id="likecommupost" parameterType="String">
 insert into handemoadb.postlike(postnum, memberid, likestatus) values(${postnum}, #{userid}, ${likestatus})
@@ -217,16 +210,8 @@ update likestatus = if(likestatus = ${likestatus}, 0, ${likestatus});
 select count(*) as likecount from handemoadb.postlike where likestatus = ${likestatus} and postnum = ${postnum}
 </select>
 
+<update id="commuViewCountUp" parameterType="Integer">
+update post set viewcount = viewcount+1 where postnum = ${postnum}
+</update>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
