@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admincomment.AdminCommentDAO">
+	<!-- 댓글 관리 sql -->
+	<!-- 조건 댓글 조회 -->
+	<select id="searchComment" resultType="admincommentjoindto" parameterType="hashmap">
+		select c.divisioncode, d.divisionname, commentnum,
+		DATE_FORMAT(c.regdate,'%Y-%m-%d') as regdate, m.nickname,
+		commentcontent, postnum
+		from
+		division as d inner join comment as c
+		on d.divisioncode = c.divisioncode
+		inner join member as m
+		on c.memberid = m.id
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	commentnum like CONCAT('%', #{searchtxt}, '%')
+			 	or commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentnum like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 3 and searchtxt != ''">
+				and nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and c.divisioncode = #{divisioncode}
+			</if>
+		</where> 
+		order by commentnum limit #{pagestartrow}, #{limitrows}
+	</select>
+	
+	<!-- 분류별 댓글 총 개수 -->
+	<select id="searchCommentRows" resultType="int" parameterType="hashmap">
+		select count(*)
+		from
+		(select c.divisioncode, d.divisionname, commentnum,
+		DATE_FORMAT(c.regdate,'%Y-%m-%d') as regdate, m.nickname,
+		commentcontent, postnum
+		from
+		division as d inner join comment as c
+		on d.divisioncode = c.divisioncode
+		inner join member as m
+		on c.memberid = m.id
+		<where>			
+			<if test="search == 0 and searchtxt != ''">
+			 	commentnum like CONCAT('%', #{searchtxt}, '%')
+			 	or commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentnum like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 3 and searchtxt != ''">
+				and nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and c.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		) c
+	</select>
+
+	<!-- 댓글 삭제 -->	
+	<delete id="deleteComment">
+		delete from comment where commentnum in
+		<foreach collection="list" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

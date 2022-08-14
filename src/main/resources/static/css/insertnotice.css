@@ -1,0 +1,15 @@
+#insertnotice_title{
+	padding:20px;
+	width:100%;
+}
+
+#insertnotice_content{
+	padding:20px;
+	width:100%;
+	white-space: pre-wrap;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+}

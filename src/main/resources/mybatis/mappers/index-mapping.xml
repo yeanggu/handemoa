@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="index.IndexDAO" >
+
+<!-- 부분 카테고리 조회 -->
+<select id="searchCate" resultType="String">
+	select distinct catename from category
+</select>
+
+<!-- 세부 카테고리 조회 -->
+<select id="searchCateAll" resultType="categorydto" parameterType="String">
+	select catedetailname,catedetailcode from category where catename=#{catename}
+</select>
+	
+<select id="rankBoardListInt" resultType="rankpostvo" parameterType="Integer">
+SELECT 
+rank() over(order by (sumlikecount * 2) - dislikecount desc) as 'rank',
+c.score,
+a.divisioncode,
+a.postnum,
+a.author,
+a.classtitle,
+a.posttitle,
+c.sumlikecount, 
+c.sumdislikecount
+FROM handemoadb.post a,
+	 handemoadb.category b,
+     (select a.postnum, 
+			 ((sum(likecount) * 2) - (sum(dislikecount))) score, 
+			 sum(likecount) sumlikecount, 
+			 sum(dislikecount) sumdislikecount
+		from (
+			   select postnum, 
+			   case when likestatus = 1 then 1 else 0 end likecount, 
+			   case when likestatus = -1 then 1 else 0 end dislikecount 
+			   from handemoadb.postlike
+			  ) a
+		group by a.postnum) c
+where divisioncode = '2'
+and a.tempsave = 1
+and a.history = 0
+and a.catedetailcode = b.catedetailcode
+and b.catedetailcode = ${catedetailcode}
+and a.postnum = c.postnum
+limit 10;
+</select>	
+	
+	
+	
+
+<select id="sellectreportlist" parameterType="admindto" resultType="admindto">
+select * from postreport 
+inner join member on postreport.reportid = member.id 
+inner join post on postreport.postnum = post.postnum
+	<trim prefix="WHERE">
+		<if test="reportType=='community'">
+			postreport.divisioncode = 1
+		</if>
+		<if test="reportType=='ranking'">
+			postreport.divisioncode = 2
+		</if>
+	</trim>
+order by postreport.postnum desc 
+LIMIT 0,8
+</select>
+
+<select id="sellectpostlist" parameterType="admindto" resultType="admindto">
+select * from post inner join member on post.memberid = member.id 
+	<trim prefix="WHERE">
+		<if test="postType=='community'">
+			post.divisioncode = 1
+		</if>
+		<if test="postType=='ranking'">
+			post.divisioncode = 2
+		</if>
+	</trim>
+order by post.viewcount desc 
+LIMIT 0,15
+</select>
+
+<select id="sellectnoticelist" parameterType="admindto" resultType="admindto">
+select * from notice order by regdate desc LIMIT 0,8
+</select>
+ 
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

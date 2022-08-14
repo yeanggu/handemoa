@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminreport.AdminReportDAO">
+	<!-- 게시글 신고 sql -->
+	<!-- 게시글 신고 조회 -->
+	<select id="searchPostReport" resultType="postreportjoindto" parameterType="hashmap">
+		select pr.divisioncode, d.divisionname, m.nickname, pr.postnum,
+		p.posttitle, count(pr.postnum) as count
+		from
+		postreport as pr
+		inner join post as p
+		on pr.postnum = p.postnum
+		inner join division as d
+		on d.divisioncode = pr.divisioncode
+		inner join member as m
+		on m.id = p.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	p.posttitle like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and p.posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and pr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by postnum 
+		order by postnum limit #{pagestartrow}, #{limitrows}
+	</select>
+	<!-- 게시글 신고 조회 총 개수 -->
+	<select id="searchPostReportRows" resultType="int" parameterType="hashmap">
+		select count(*)
+		from
+		(select pr.divisioncode, d.divisionname, m.nickname, pr.postnum,
+		p.posttitle, count(pr.postnum) as count
+		from
+		postreport as pr
+		inner join post as p
+		on pr.postnum = p.postnum
+		inner join division as d
+		on d.divisioncode = pr.divisioncode
+		inner join member as m
+		on m.id = p.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	p.posttitle like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and p.posttitle like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and pr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by postnum) c
+	</select>
+
+	<!-- 신고 사유 조회 -->
+	<select id="postReportDetail" resultType="postreportdto" parameterType="int">
+		select * from postreport where postnum = #{postnum}
+	</select>
+	<!-- 게시글 신고 삭제 -->
+	<delete id="deletePostReport">
+		delete from postreport where postnum in
+		<foreach collection="list" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+
+	<!-- 댓글 신고  -->
+	<!-- 댓글 신고 조회 -->
+	<select id="searchCommentReport" resultType="commentreportjoindto" parameterType="hashmap">
+		select cr.divisioncode, d.divisionname, m.nickname, cr.commentnum,
+		commentcontent, count(cr.commentnum) as count
+		from
+		commentreport as cr
+		inner join comment as c
+		on cr.commentnum = c.commentnum
+		inner join division as d
+		on d.divisioncode = cr.divisioncode
+		inner join member as m
+		on m.id = c.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and cr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by commentnum 
+		order by commentnum limit #{pagestartrow}, #{limitrows}
+	</select>
+	<!-- 댓글 신고 조회 총 개수 -->
+	<select id="searchCommentReportRows" resultType="int" parameterType="hashmap">
+		select count(*)
+		from
+		(select cr.divisioncode, d.divisionname, m.nickname, cr.commentnum,
+		commentcontent, count(cr.commentnum) as count
+		from
+		commentreport as cr
+		inner join comment as c
+		on cr.commentnum = c.commentnum
+		inner join division as d
+		on d.divisioncode = cr.divisioncode
+		inner join member as m
+		on m.id = c.memberid
+		<where>					
+			<if test="search == 0 and searchtxt != ''">
+			 	commentcontent like CONCAT('%', #{searchtxt}, '%') 
+			 	or m.nickname like CONCAT('%', #{searchtxt}, '%')	
+			</if>
+			<if test="search == 1 and searchtxt != ''">
+				and commentcontent like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="search == 2 and searchtxt != ''">
+				and m.nickname like CONCAT('%', #{searchtxt}, '%')
+			</if>
+			<if test="divisioncode != 0">
+				and cr.divisioncode = #{divisioncode}
+			</if>
+		</where>
+		group by commentnum) c
+	</select>
+
+	<!-- 신고 사유 조회 -->
+	<select id="commentReportDetail" resultType="postreportdto" parameterType="int">
+		select * from commentreport where commentnum = #{commentnum}
+	</select>
+	<!-- 댓글 신고 삭제 -->
+	<delete id="deleteCommentReport">
+		delete from commentreport where commentnum in
+		<foreach collection="list" item="num" open="(" close=")" separator=",">
+			#{num}
+		</foreach>
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

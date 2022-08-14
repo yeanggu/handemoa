@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="calendar.CalendarDAO" >
+ 
+	<select id="ddayList" resultType="calddaydto" parameterType="String">
+		select memberid, ddaynum, date from dday where memberid=#{memberid}
+	</select>
+	<select id="oxnoteList" resultType="caloxdto" parameterType="String">
+		select memberid, oxnum, regdate from oxnote where memberid=#{memberid}
+	</select>
+	<select id="studynoteList" resultType="calstudydto" parameterType="String">
+		select memberid, studynum, regdate from studynote where memberid=#{memberid}
+	</select>
+	<select id="todoList" resultType="caltododto" parameterType="String">
+		select memberid, todonum, regdate from todo where memberid=#{memberid}
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

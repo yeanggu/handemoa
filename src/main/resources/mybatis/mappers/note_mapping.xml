@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="note.NoteDAO" >
+ 
+<select id="noteList" resultType="notedto" parameterType="String">
+	select * from note where memberid=#{memberid}
+</select>
+
+<insert id="insertnote" parameterType="notedto">
+	insert into note(memberid,notetitle) values(#{memberid}, #{notetitle})
+</insert>
+
+<update id="updatenote" parameterType="notedto">
+   update note set notetitle = #{notetitle}
+   where notenum = ${notenum}
+</update>
+
+<delete id="deletenote" parameterType="notedto">
+	delete from note where notenum = ${notenum}
+</delete>
+
+
+
+
+<select id="oxnoteList" resultType="notedto" parameterType="notedto">
+	select * from oxnote 
+	where memberid=#{memberid} and notenum=#{notenum}
+</select>
+
+<insert id="insertoxnote" parameterType="notedto">
+	insert into oxnote(memberid,oxtitle,notenum,notetitle) 
+	values(#{memberid}, #{oxtitle}, #{notenum}, #{notetitle}) 
+</insert>
+
+<select id="selectoxicon" parameterType="Integer" resultType="notedto">
+	select * from oxnote 
+	where oxnum = ${oxnum}
+</select>
+
+<update id="updateoxicon" parameterType="Integer">
+   update oxnote 
+   set oxstate = ${oxstate}
+   where oxnum = ${oxnum}
+</update>
+
+<update id="updateoxstate" parameterType="Integer">
+   update oxnote 
+   set oxstate = ${oxstate}
+   where oxnum = ${oxnum}
+</update>
+
+<update id="updateoxtext" parameterType="notedto">
+   update oxnote 
+   set oxtitle = #{oxtitle}
+   where oxnum = ${oxnum}
+</update>
+
+<delete id="deleteoxnote" parameterType="notedto">
+   delete from oxnote  where oxnum = ${oxnum}
+</delete>
+
+
+
+
+
+<select id="studynoteList" resultType="notedto" parameterType="notedto">
+	select * from studynote 
+	where memberid=#{memberid} and notenum=#{notenum}
+</select>
+
+<insert id="insertstudynote" parameterType="notedto">
+	insert into studynote(memberid,studytitle,notenum,notetitle) 
+	values(#{memberid}, #{studytitle}, #{notenum}, #{notetitle}) 
+</insert>
+
+<select id="selectstudyicon" parameterType="Integer" resultType="notedto">
+	select * from studynote 
+	where studynum = ${studynum}
+</select>
+
+<update id="updatestudyicon" parameterType="Integer">
+   update studynote 
+   set studystate = ${studystate}
+   where studynum = ${studynum}
+</update>
+
+<update id="updatestudystate" parameterType="Integer">
+   update studynote 
+   set studystate = ${studystate}
+   where studynum = ${studynum}
+</update>
+
+<update id="updatestudytext" parameterType="notedto">
+   update studynote 
+   set studytitle = #{studytitle}
+   where studynum = ${studynum}
+</update>
+
+<delete id="deletestudynote" parameterType="notedto">
+   delete from studynote  where studynum = ${studynum}
+</delete>
+
+
+
+
+
+<select id="oxnotecontentList" resultType="notedto" parameterType="notedto">
+	select * from oxnote 
+	where memberid=#{memberid} and oxnum=#{oxnum}
+</select>
+
+<update id="updateoxtextcontent" parameterType="notedto">
+   update oxnote 
+   set question = #{question},
+   answer = #{answer}
+   <!-- ,regdate = #{regdate} -->
+   where oxnum = ${oxnum}
+</update>
+
+<select id="studynotecontentList" resultType="notedto" parameterType="notedto">
+	select * from studynote 
+	where memberid=#{memberid} and studynum=#{studynum}
+</select>
+
+<update id="updatestudytextcontent" parameterType="notedto">
+   update studynote 
+   set content = #{content}
+   where studynum = ${studynum}
+</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

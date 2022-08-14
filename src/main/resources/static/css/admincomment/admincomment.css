@@ -1,0 +1,318 @@
+@charset "UTF-8";
+
+#inner_space{
+	width: 100%;
+    height: 70px;
+}
+
+#admincomment_content {
+    width: 100%;
+    height: 830px;
+    border-radius: 15px;
+    background-color: white;
+    margin-bottom: 70px;
+}
+
+h3{
+	margin: 10px auto 0 auto;
+}
+/*해당 페이지 네비바*/
+.nav_list_area:nth-child(3){
+   background-color: #12379e;
+   border-radius: 15px;
+}
+.nav_list_area:nth-child(3) h4{
+   color:white;
+}
+/*관리 탭*/
+.adminmanage_bar{
+	margin: 0px 0px 20px 0px;
+	display: flex;
+    font-size: 30px;
+    font-weight: bold;
+}
+.title_bar{
+    flex-grow: 1;
+	display: flex;
+    justify-content: center;
+	align-items: center;
+}
+
+.title_bar:nth-child(1) {
+	background-color:  rgb(209, 209, 209); 
+    border-radius: 15px 0px 0px 0px;
+}
+.title_bar:nth-child(2) a{color: #12379e;}
+.title_bar:nth-child(3) {
+	background-color:  rgb(209, 209, 209);
+	border-radius: 0px 15px 0px 0px;	
+}
+
+/*글분류 검색, 버튼, 삭제 버튼*/
+#delete_btn {
+    margin: auto 15px;
+    width: 70px;
+    height: 30px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+}
+.content_head{
+	display:flex;
+	margin: 30px 30px 0px 20px;
+	height: 50px;
+	align-items: center;
+	justify-content: space-between;
+}
+.content_head_search{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.content_search_item{
+	width:80px;
+}
+.content_search_select{
+	margin:2px;
+}
+.search_select{
+	width: 100px;
+    height: 30px;
+}
+#comment_search_box {
+    width: 200px;
+    height: 35px;
+    margin: 0px 10px;
+    border-radius: 50px;
+    background-color: white;
+    align-self: center;
+    box-shadow: 0px 0px 4px rgb(209, 209, 209);
+}
+#comment_searchdetail {
+    width: 100px;
+    height: 23px;
+    margin-left: 4px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+#search_btn{
+	width: 35px;
+    display: block;
+}
+#search_btn, .search_select, button:hover {
+   cursor: pointer;
+}
+
+/*댓글 목록*/
+#comment_list{
+	padding:20px;
+	padding-top: 0px;
+	height: 550px;
+}
+
+.list_head{
+	width: 100%;
+	display:flex;
+	background-color: rgb(209, 209, 209) ;
+	margin-bottom: 10px;
+}
+.list_body, .list_row{
+	margin-bottom: 5px;
+}
+
+.list_row{
+	width: 100%;
+	display:flex;
+	background-color: #f4f4f4;
+}
+.report{
+	margin: 18px auto;
+	text-align: center;
+	white-space: nowrap;
+  	overflow: hidden;
+    text-overflow: ellipsis;  /*말줄임 적용*/
+}
+.report:first-child, .report:nth-child(2), .report:nth-child(3), .report:nth-child(5) {
+	width:7%;
+}
+
+.report:nth-child(4), .report:last-child{
+	width: 10%;
+}
+.report:nth-child(6) { 
+	width:40%; 
+	white-space: nowrap;
+  	overflow: hidden;
+    text-overflow: ellipsis;  /*말줄임 적용*/
+	text-align: justify;
+}
+
+input[type="checkbox"]{
+	height:20px;
+	width:20px;
+	margin-top: 3px;
+}
+
+/*체크 내역 없음 모달*/
+#modal_check {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+#modal_check .modal_layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: -1;
+}
+#modal_check .modal_content {
+	width: 350px;
+	margin: 250px auto;
+	padding: 20px 10px;
+	border-radius: 10px;
+	background: #fff;
+	border: 2px solid #666;	
+}
+#modal_check .modal_content_title {
+	width:100%;
+	margin: 30px auto;
+	text-align: center;
+}
+#modal_check_close_btn {
+	margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+    display:block;
+}
+
+/* 삭제 확인 모달*/
+#modal_confirm {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+#modal_confirm .modal_layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*화면 가운데 정렬*/
+	/*display: flex; 
+	align-items: center;
+	justify-content: center;*/
+	background: rgba(0, 0, 0, 0.4);
+	z-index: -1;
+}
+
+#modal_confirm .modal_content {
+	width: 350px;
+	margin: 250px auto;
+	padding: 20px 10px;
+	border-radius: 10px;
+	background: #fff;
+	border: 2px solid #666;	
+}
+
+#modal_confirm h2 {
+	margin:70px 0;
+	text-align: center;
+}
+
+.modal_confirm_btn{
+	display: flex;
+	flex-direction: row;
+}
+
+.modal_confirm_btn button{
+	text-align: center;
+}
+
+#modal_confirm_close_btn {
+    margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#modal_confirm_ok_btn {
+	margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+}
+
+#admincomment_page {
+	margin-top: 50px;
+	padding : 5px;
+	display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.page{
+	padding : 5px;
+	font-size: 25px;
+	justify-content: center;
+    align-items: center;
+}
+
+.direction_prev, .direction_next{
+	display: flex;
+}
+
+.direction_prev .true, .direction_next .true{
+	color: white;
+}
+
+.direction_prev .false, .direction_next .false{
+	color: white;
+}
+
+.direction_next div{
+	color: white;
+	font-size: 25px;
+	background-color: #12379e;
+	border-radius:5px;
+	border: 2px solid white;
+	padding: 5px 7px;
+	margin: auto 0px;
+	height:20px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direction_prev div{
+	color: white;
+	font-size: 25px;
+	background-color: #12379e;
+	border-radius:5px;
+	border: 2px solid white;
+	padding: 5px 7px;
+	margin: auto 0px;
+	height:20px;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}

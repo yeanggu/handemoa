@@ -1,0 +1,122 @@
+/*//////////////////////////////////////////*/
+/*////////////////    알람    //////////////*/
+
+.alarm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.alarm_btn_area {
+    display: flex;
+}
+
+.alarm_btn{
+    width: 30px;
+    height: 30px;
+    background-color: #12379e;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor:pointer
+}
+
+.alarm_controller {
+    display: flex;
+    width: 300px;
+    background-color: rgb(233, 233, 233);
+}
+
+.alarm_all_remove {
+    font-size: 14px;
+    padding: 5px 5px 5px 10px;
+    cursor:pointer
+}
+
+.alarmlist_area {
+    top: 60px;
+    right: 350px;
+    width: 300px;
+    height: 400px;
+    overflow: scroll;
+    background-color: white;
+    position: absolute;
+    display: none;
+}
+
+.alarmlist_area::-webkit-scrollbar {
+width: 8px;
+}
+.alarmlist_area::-webkit-scrollbar-thumb {
+background-color: #12379e;
+border-radius: 10px;
+}
+.alarmlist_area::-webkit-scrollbar-track {
+background-color: white;
+border-radius: 10px;
+box-shadow: inset 0px 0px 5px white;
+}
+
+.alarmcount {
+    width: 20px;
+    height: 20px;
+    display: none;
+    background-color: red;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.alarmcount_inner {
+    text-align: center;
+    color: white;
+}
+
+.alarmlist {
+    padding: 8px 0px 8px 0;
+    margin: 0 10px 0 10px;
+}
+
+.alarmlist_1 {
+    display: flex;
+}
+
+.alarmlist_1 > p {
+    font-size: 14px;
+}
+
+.alarmlist_date {
+    color: rgb(185, 185, 185);
+}
+
+.alarmlist_content {
+    font-size: 14px;
+    font-weight: 500;
+    cursor:pointer
+}
+
+.alarmlist_content > a {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor:pointer
+}
+
+.alarmlist_content2 > a {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(185, 185, 185);
+    cursor:pointer
+}
+
+.alarmlist_caller2 {
+    color: rgb(185, 185, 185);
+}
+
+.alarmlist_text2 {
+    color: rgb(185, 185, 185);
+}

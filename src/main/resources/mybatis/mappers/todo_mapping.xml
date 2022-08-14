@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="todo.TodoDAO" >
+ 
+<select id="todoList" resultType="tododto" parameterType="tododto">
+	select * from todo where memberid=#{memberid} and regdate like concat('%',#{today},'%')
+</select>
+
+<insert id="inserttodo" parameterType="tododto">
+	insert into todo(memberid,todotitle,regdate) values(#{memberid}, #{todotitle}, #{today})
+</insert>
+
+<update id="updatetodo" parameterType="tododto">
+   update todo 
+   set todostate = ${todostate}
+   where todonum = ${todonum}
+</update>
+
+<select id="selecttodoicon" parameterType="Integer" resultType="tododto">
+	select * from todo where todonum = ${todonum}
+</select>
+
+<update id="updatetodoicon" parameterType="Integer">
+   update todo 
+   set todostate = ${todostate}
+   where todonum = ${todonum}
+</update>
+
+<update id="updatetext" parameterType="tododto">
+   update todo set todotitle = #{todotitle}
+   where todonum = ${todonum}
+</update>
+
+<delete id="deletetodo" parameterType="tododto">
+	delete from todo where todonum = ${todonum}
+</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

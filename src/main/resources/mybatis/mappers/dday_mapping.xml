@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="dday.DdayDAO" >
+ 
+	<select id="ddayList" resultType="ddaydto" parameterType="String">
+		select * from dday where memberid=#{memberid} order by date asc
+	</select>
+	<!-- Dday 등록 -->
+	<insert id="insertDday" parameterType="ddaydto">
+		insert into dday(memberid, ddaytitle, date) values(#{memberid}, #{ddaytitle}, #{date})
+	</insert>
+	<!-- Dday 삭제 -->
+	<delete id="deleteDday">
+		delete from dday where ddaynum in
+		<foreach collection="list" item="ddaynum" open="(" close=")" separator=",">
+			#{ddaynum}
+		</foreach>
+	</delete>
+	<!-- Dday 수정 -->
+	<update id="updateDday" parameterType="ddaydto">
+		update dday
+		set ddaytitle=#{ddaytitle} , date=#{date}
+		where ddaynum = #{ddaynum}
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+

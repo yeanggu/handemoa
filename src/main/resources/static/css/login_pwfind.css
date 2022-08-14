@@ -1,0 +1,290 @@
+@charset "UTF-8";
+
+#content {
+    width: 100%;
+    height: 800px;
+    background-color: white;
+    margin-bottom: 40px;
+}
+
+/*비밀번호 모달*/
+#modal_pwfind button:hover{
+	cursor: pointer;
+}
+#modal_pwfind {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+#modal_pwfind .modal_layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*화면 가운데 정렬*/
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: -1;
+}
+
+#modal_pwfind .modal_content {
+	width: 400px;
+	margin: 250px auto;
+	padding: 20px 10px;
+	border-radius: 10px;
+	background: #fff;
+	border: 2px solid #666;	
+}
+
+#modal_pwfind h1 {
+	margin: 3px;
+}
+
+.modal_pwfind_btn{
+	display: flex;
+	flex-direction: row;
+}
+
+.modal_pwfind_btn button{
+	text-align: center;
+}
+#modal_pwfind_close_btn {
+    margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: black;
+    background: #bdbdbd;
+}
+
+#modal_pwfind_ok_btn {
+	margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+}
+
+/* 비밀번호 찾기 result */
+#modal_pwfindresult button:hover{
+	cursor: pointer;
+}
+#modal_pwfindresult {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+#modal_pwfindresult .modal_layer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	/*화면 가운데 정렬*/
+	display: flex; 
+	align-items: center;
+	justify-content: center;
+	background: rgba(0, 0, 0, 0.4);
+	z-index: -1;
+}
+
+#modal_pwfindresult .modal_content {
+	width: 350px;
+	margin: 250px auto;
+	padding: 20px 10px;
+	border-radius: 10px;
+	background: #fff;
+	border: 2px solid #666;	
+}
+
+#modal_pwfindresult h1 {
+	margin: 3px;
+}
+
+.modal_pwfindresult_btn{
+	display: flex;
+	flex-direction: row;
+}
+
+.modal_pwfindresult_btn button{
+	text-align: center;
+}
+#modal_pwfindresult_close_btn {
+    margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+}
+
+#modal_pwfindresult_ok_btn {
+	margin: 10px auto 0 auto;
+    width: 70px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+}
+
+/* pw 모달 */
+
+/* 입력 CSS */
+#pwfind_id {
+	display: flex;
+	justify-content: center;
+	margin-top: 60px;
+	margin-right : 90px;
+}
+
+#pwfind_id_box {
+    width: 300px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: white;
+    align-self: center;
+    box-shadow: 0px 0px 4px rgb(209, 209, 209);
+    border: none;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+	
+}
+
+#pwfind_id_id { 
+    width: 300px;
+    height: 30px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    
+}
+
+#pwfind_email_email { 
+    width: 300px;
+    height: 30px;
+    margin-left: 15px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    
+}
+
+
+#pwfind_phone_phone { 
+    width: 300px;
+    height: 30px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;    
+}
+
+/* 생년월일 */
+#pwfind_birth_yy { 
+    width: 70px;
+    height: 30px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;   
+    
+}
+
+#pwfind_birth_mm { 
+    width: 70px;
+    height: 30px;
+    margin-left: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin-right: 30px;
+}
+
+#pwfind_birth_dd { 
+    width: 70px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    
+}
+
+/* 이메일 인증 번호 CSS */
+#pwemailok_box {
+	width: 180px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: white;
+    align-self: center;
+    box-shadow: 0px 0px 4px rgb(209, 209, 209);
+    border: none;
+    text-align: center; 
+    display: flex;
+    justify-content: center;
+    margin-top:10px;
+}
+
+
+/* pw find */
+#pwfindrequest {
+    width: 100px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+    margin-left: 20px;
+    margin-top:10px;
+}
+
+#pwfindemailCheck {
+    width: 100px;
+    height: 25px;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    background: #12379e;
+    margin-left: 20px;
+    
+}
+
+#pwfindemailCode {
+	width: 100px;
+    height: 30px;
+    margin-left: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+#pwfindemailtime{
+	width: 80px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 15px;
+    margin-bottom:10px;
+    color: red;
+    margin-top:5px;
+}
+
+#checkimg2{
+	margin-left: 50px;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category1.CategoryDAO" >
+
+<select id="categoryList" resultType="categorydto" parameterType="String">
+select catedetailname, catedetailcode FROM category where catename=#{catename}
+</select>
+
+<select id="catename" resultType="categorydto" parameterType="Integer">
+select * FROM category where catedetailcode=${catedetailcode}
+</select>
+
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
